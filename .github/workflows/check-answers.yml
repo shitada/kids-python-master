@@ -1,0 +1,35 @@
+name: こたえ（answer）が うごくか チェック
+
+# かんせいれい（answer）の コードが エラーなく うごくかを じどうで しらべます。
+# たいわ（input）や おとの さいせいは のぞいています。
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  check-answers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを とってくる
+        uses: actions/checkout@v4
+
+      - name: Python 3.12 を じゅんび
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: ライブラリを インストール
+        run: pip install -r requirements.txt
+
+      - name: 01 ドットえメーカー
+        run: python challenges/01-dot-art-maker/answer/dot_art.py
+
+      - name: 02 メトロノーム（--fast で まちなし）
+        run: python challenges/02-metronome/answer/metronome.py --fast
+
+      - name: 03 ドレミ→しゅうはすう
+        run: python challenges/03-note-frequency/answer/note_freq.py
