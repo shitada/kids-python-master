@@ -1,7 +1,7 @@
 name: こたえ（answer）が うごくか チェック
 
 # かんせいれい（answer）の コードが エラーなく うごくかを じどうで しらべます。
-# たいわ（input）や おとの さいせいは のぞいています。
+# たいわ（input）や ほんものの がめん・おとの さいせいは のぞいています。
 
 on:
   push:
@@ -33,3 +33,10 @@ jobs:
 
       - name: 03 ドレミ→しゅうはすう
         run: python challenges/03-note-frequency/answer/note_freq.py
+
+      - name: 04 ピクセル・メロディ・クエスト
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+          PYGAME_HIDE_SUPPORT_PROMPT: "1"
+        run: python challenges/04-pixel-melody-quest/answer/pixel_melody_quest.py --check
