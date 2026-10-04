@@ -126,6 +126,9 @@ def main():
     mina.show_team()
     print()
     ryo.show_team()
+    print()
+    sora = Trainer("ソラ")   # 今日トレーナーになったばかりのソラ
+    sora.show_team()
 
     title("🤝 先鋒どうしの交流戦")
     first_match(mina, ryo)

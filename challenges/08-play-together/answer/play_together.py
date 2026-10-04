@@ -96,14 +96,14 @@ class Monster:
 
     def play_with(self, other):
         """other と遊ぶ。遊べたら True、お休みなら False を返す。"""
-        # TODO 3: can_play_with で確かめてから、
+        # TODO 3: can_play_with で確かめて、遊べる時だけ、
         #         自分の play() と、相手の play() を1回ずつ呼んで、True を返そう。
         #         遊べない時は、だれも遊ばずに False を返そう。
-        if not self.can_play_with(other):
-            return False
-        self.play()
-        other.play()
-        return True
+        if self.can_play_with(other):
+            self.play()
+            other.play()
+            return True
+        return False
 
     def tackle(self, other):
         """other に、たいあたりする。相手の HP が本当に減った量を返す。"""

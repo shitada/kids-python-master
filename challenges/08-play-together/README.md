@@ -251,10 +251,14 @@ python challenges/08-play-together/play_together.py
 
 - **完成の目印:** 広場で「🎉 ふたり遊び、成功！」と「🛑 つかれている子がいるので、今回はお休み」が出る
 - **ヒント:**
-  1. `if not self.can_play_with(other):` → `return False`（`not` は「〜でない」）
-  2. `self.play()`
-  3. `other.play()`
-  4. `return True`
+  ```python
+  if self.can_play_with(other):
+      self.play()
+      other.play()
+      return True
+  return False
+  ```
+  `return False` は `if` の外（字下げを1段もどす）。遊べなかった時だけ、ここまで来るよ
 
 ### TODO 4 💥 たいあたり！
 
@@ -377,10 +381,10 @@ HP が 2 しかない子に 5 のたいあたりをすると、「5 ダメージ
 ```python
 def play_with(self, other):
     self.play()
-    if not self.can_play_with(other):
-        return False
-    other.play()
-    return True
+    if self.can_play_with(other):
+        other.play()
+        return True
+    return False
 ```
 
 <details>
@@ -388,7 +392,7 @@ def play_with(self, other):
 
 確かめる前に、`self.play()` で自分が先に遊んでしまっている。
 だから、お休みになっても、ピコだけつかれてしまうんだ。
-**確かめる → 遊ぶ** の順番になるように、`self.play()` を `if` の後に動かそう。
+**確かめる → 遊ぶ** の順番になるように、`self.play()` を `if` の中に動かそう。
 
 </details>
 

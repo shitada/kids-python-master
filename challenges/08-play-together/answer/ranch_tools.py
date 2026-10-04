@@ -271,7 +271,9 @@ def check_todo1(blueprint):
     friend, _ = try_quietly(lambda: a.can_play_with(b))
     if alone is not False:
         return False, "自分自身（同じ本人）とは遊べないよ。self is other なら False を返そう"
-    if with_twin is not True or friend is not True:
+    if friend is not True:
+        return False, "元気なふたりなら True だよ。is_tired の () を忘れていないかな？（self.is_tired()）"
+    if with_twin is not True:
         return False, "同じ名前でも別の子となら遊べるよ。名前ではなく is で「同じ本人？」と聞こう"
     if state(a) != (10, 50):
         return False, "can_play_with は答えるだけのメソッド。ここで遊んだり HP を変えたりしないでね"

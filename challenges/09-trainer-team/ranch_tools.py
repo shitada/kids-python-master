@@ -260,10 +260,10 @@ def check_todo1(blueprint):
         return False, "トレーナーが team を持っていないよ。self. を忘れていないかな？"
     if not isinstance(first.team, list):
         return False, "self.team に、空っぽのリスト [] を用意しよう"
-    if first.team != []:
-        return False, "誕生した時のチーム表は、空っぽ [] にしよう"
     if first.team is second.team or "team" in vars(blueprint):
         return False, "チーム表が、トレーナーみんなで1つになっているよ。__init__ の中で self.team = [] と作ろう"
+    if first.team != []:
+        return False, "誕生した時のチーム表は、空っぽ [] にしよう"
     return True, "トレーナーごとに、自分だけのチーム表ができた"
 
 
@@ -280,8 +280,8 @@ def check_todo2(blueprint, monster_blueprint):
             return False, f"recruit でエラーが出たよ → {type(error).__name__}: {error}"
         answers.append(answer)
     team = team_of(trainer)
-    if all(answer is None for answer in answers):
-        return False, "まだ何も返していないみたい。入れたら True、入れなかったら False を return しよう"
+    if any(answer is None for answer in answers):
+        return False, "入れたら True、入れなかったら False を return しよう（return を忘れていないかな？）"
     if not team:
         return False, "チームに、だれも入っていないよ。self.team.append(monster) しよう"
     if any(isinstance(member, str) for member in team):
@@ -334,6 +334,8 @@ def check_todo4(blueprint, monster_blueprint):
     except Exception as error:  # noqa: BLE001
         return False, f"show_team でエラーが出たよ → {type(error).__name__}: {error}"
     if quiet_text(a) not in shown and quiet_text(b) not in shown:
+        if a.name in shown or b.name in shown:
+            return False, "名前だけでなく、{member} と書いて自己紹介まるごとを出そう（__str__ が使われるよ）"
         return False, "チームの子を、for で1匹ずつ自己紹介（print）しよう"
     if quiet_text(a) not in shown or quiet_text(b) not in shown:
         return False, "チームの全員を紹介できているかな？"
