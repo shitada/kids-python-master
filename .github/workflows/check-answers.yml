@@ -34,6 +34,12 @@ jobs:
       - name: 03 ドレミ→しゅうはすう
         run: python challenges/03-note-frequency/answer/note_freq.py
 
+      - name: だい2ぶ ranch_tools.py が answer と おなじか
+        run: |
+          for d in challenges/04-first-monster challenges/05-monster-care challenges/06-monster-card; do
+            diff -q "$d/ranch_tools.py" "$d/answer/ranch_tools.py"
+          done
+
       - name: だい2ぶ こたえが ぜんぶ ✅ になるか
         env:
           STRICT_CHECK: "1"
