@@ -37,10 +37,15 @@ jobs:
       - name: だい2ぶ ranch_tools.py・monster.py が answer と おなじか
         run: |
           for d in challenges/04-first-monster challenges/05-monster-care challenges/06-monster-card \
-                   challenges/07-busy-ranch challenges/08-play-together challenges/09-trainer-team; do
+                   challenges/07-busy-ranch challenges/08-play-together challenges/09-trainer-team \
+                   challenges/10-same-signal challenges/11-floating-friend challenges/12-shield-monster \
+                   challenges/13-toy-workshop challenges/14-ranch-newspaper; do
             diff -q "$d/ranch_tools.py" "$d/answer/ranch_tools.py"
           done
-          diff -q challenges/09-trainer-team/monster.py challenges/09-trainer-team/answer/monster.py
+          for d in challenges/09-trainer-team challenges/10-same-signal challenges/11-floating-friend \
+                   challenges/12-shield-monster challenges/13-toy-workshop challenges/14-ranch-newspaper; do
+            diff -q "$d/monster.py" "$d/answer/monster.py"
+          done
 
       - name: だい2ぶ こたえが ぜんぶ ✅ になるか
         env:
@@ -52,6 +57,11 @@ jobs:
           python challenges/07-busy-ranch/answer/busy_ranch.py
           python challenges/08-play-together/answer/play_together.py
           python challenges/09-trainer-team/answer/trainer_team.py
+          python challenges/10-same-signal/answer/same_signal.py
+          python challenges/11-floating-friend/answer/floating_monster.py
+          python challenges/12-shield-monster/answer/shield_monster.py
+          python challenges/13-toy-workshop/answer/my_tool.py
+          python challenges/14-ranch-newspaper/answer/ranch_day.py
 
       - name: だい2ぶ スターター（あなあき）が とまらずに うごくか
         run: |
@@ -61,13 +71,18 @@ jobs:
           python challenges/07-busy-ranch/busy_ranch.py
           python challenges/08-play-together/play_together.py
           python challenges/09-trainer-team/trainer_team.py
+          python challenges/10-same-signal/same_signal.py
+          python challenges/11-floating-friend/floating_monster.py
+          python challenges/12-shield-monster/shield_monster.py
+          python challenges/13-toy-workshop/my_tool.py
+          python challenges/14-ranch-newspaper/ranch_day.py
 
       - name: だい2ぶ いろなし（NO_COLOR=1）でも こたえが ✅ になるか
         env:
           STRICT_CHECK: "1"
           NO_COLOR: "1"
         run: |
-          for f in challenges/0[4-9]-*/answer/*.py; do
+          for f in challenges/0[4-9]-*/answer/*.py challenges/1[0-4]-*/answer/*.py; do
             case "$f" in */ranch_tools.py|*/monster.py) continue ;; esac
             python "$f" > /dev/null
           done

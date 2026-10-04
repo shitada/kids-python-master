@@ -22,10 +22,14 @@
 | 07 | にぎやかな牧場 | オブジェクトの同一性（名札と本人）・`is`と`==`の使い分け・オブジェクトを返す関数 | ★★★ |
 | 08 | となりの子とあそぼう | 引数に別のインスタンス（`self`と`other`）・相手の値は相手のメソッドで変える・確かめてから動く | ★★★ |
 | 09 | トレーナーとチーム | 持っている関係（has-a）・`__init__`の中でリストを作る理由・仕事の委譲 | ★★★ |
+| 10 | みんな同じ合図で | 継承なしのポリモーフィズム（同じメソッド名・引数・戻り値の約束） | ★★★ |
+| 11 | ふわふわな仲間 | 継承（is-a）とオーバーライド。子に`__init__`を書かない段階 | ★★★ |
+| 12 | 親の仕事に、ひと工夫 | `super()`（子の`__init__`から親を呼ぶ・親のメソッドの前に処理を足して戻り値を返す） | ★★★ |
+| 13 | 君だけの道具工房 | 状態と仕事の持ち主を決めてクラスを設計する・クラスにしない判断（関数・辞書） | ★★★ |
+| 14 | 牧場の1日を新聞に | 新文法なしの総仕上げ。部品への依頼の組み合わせ、本人の参照と値の記録のちがい、PNG出力 | ★★★ |
 
 課題01〜03は独立しているので、興味のあるものから始めても大丈夫です。
-第2部（04〜）は前の章の内容を使うため、**04 → 05 → …… → 09 の順**で進めてください。
-（10章以降は準備中です）
+第2部（04〜14）は前の章の内容を使うため、**04 → 05 → …… → 14 の順**で進めてください。
 
 ---
 
@@ -36,7 +40,8 @@ challenges/NN-xxx/
 ├─ README.md      … 子ども向けの説明・ヒント・チャレンジ
 ├─ xxx.py         … スターター（穴あき）。子どもが # TODO を埋める
 ├─ ranch_tools.py … （第2部のみ）表示とTODOチェックの道具。さわらなくてよい
-├─ monster.py     … （09章〜）前章までに完成させた Monster の設計図。読んでよい・直さなくてよい
+├─ monster.py     … （09章〜）前章までに完成させた Monster の設計図（14章は全部品入り）。読んでよい・直さなくてよい
+├─ output/        … （14章）作られた新聞の画像。Git の管理対象外
 └─ answer/xxx.py  … 完成例（うまくいかない時の確認用）
 ```
 
@@ -93,12 +98,19 @@ challenges/NN-xxx/
 | 08 | 「審判が HP を直接変えると、何が困る？」 | ルールを持つ相手のメソッドに頼めば、ルールが1か所で済む |
 | 09 | 「トレーナーはモンスター？」 | 「持っている（has-a）」と「〜である」は別の関係 |
 | 09 | 「`team = []` をクラスのすぐ下に書くと？」 | 全員で1つのリストを共有してしまう（クラス属性） |
+| 10 | 「`use_all` は、道具の種類を知っている？」 | 呼ぶ側は種類を調べず、約束（`use(monster)`）だけを頼りにする |
+| 11 | 「`fuwa.eat(2)` の `eat` は、どこにある？」 | 子になければ親を探す。同じ名前を子に書くと書きかえ（オーバーライド） |
+| 12 | 「子に `__init__` を書いたら、親の `__init__` は動く？」 | 自動では動かない。`super().__init__(...)` で頼む |
+| 13 | 「残り回数は、だれが覚えるべき？」 | 情報は、その情報の持ち主に持たせる。覚えることがなければ関数で十分 |
+| 14 | 「朝の記事が夕方の値になったのはなぜ？」 | 記録に本人の参照を入れると変わって見える。値を写して記録する |
 
 ### あえて扱っていないこと
 
 `@property`・`@classmethod`・`@staticmethod`・多重継承・抽象基底クラス・`dataclass`・
 `__repr__`・名前マングリング（`__x`）などは、初学者の混乱を避けるため扱いません。
-今後の章で、ポリモーフィズム（継承なし）、継承と`super()`を順に扱う予定です。
+ポリモーフィズムは、継承より先に「継承なし」で扱います（10章）。「ポリモーフィズム＝継承が必要」という誤解を避けるためです。
+`isinstance` は11章のおまけで「確かめる道具」として紹介するにとどめ、型で動きを分ける書き方は勧めていません。
+JSON などによる保存（シリアライズ）は、ファイル操作や復元の設計が混ざり1章1概念を崩すため、本編では扱っていません。
 
 ### 用語の正確さについて（大人向けメモ）
 
@@ -157,4 +169,9 @@ STRICT_CHECK=1 python challenges/06-monster-card/answer/monster_card.py
 STRICT_CHECK=1 python challenges/07-busy-ranch/answer/busy_ranch.py
 STRICT_CHECK=1 python challenges/08-play-together/answer/play_together.py
 STRICT_CHECK=1 python challenges/09-trainer-team/answer/trainer_team.py
+STRICT_CHECK=1 python challenges/10-same-signal/answer/same_signal.py
+STRICT_CHECK=1 python challenges/11-floating-friend/answer/floating_monster.py
+STRICT_CHECK=1 python challenges/12-shield-monster/answer/shield_monster.py
+STRICT_CHECK=1 python challenges/13-toy-workshop/answer/my_tool.py
+STRICT_CHECK=1 python challenges/14-ranch-newspaper/answer/ranch_day.py
 ```
