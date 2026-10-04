@@ -34,11 +34,13 @@ jobs:
       - name: 03 ドレミ→しゅうはすう
         run: python challenges/03-note-frequency/answer/note_freq.py
 
-      - name: だい2ぶ ranch_tools.py が answer と おなじか
+      - name: だい2ぶ ranch_tools.py・monster.py が answer と おなじか
         run: |
-          for d in challenges/04-first-monster challenges/05-monster-care challenges/06-monster-card; do
+          for d in challenges/04-first-monster challenges/05-monster-care challenges/06-monster-card \
+                   challenges/07-busy-ranch challenges/08-play-together challenges/09-trainer-team; do
             diff -q "$d/ranch_tools.py" "$d/answer/ranch_tools.py"
           done
+          diff -q challenges/09-trainer-team/monster.py challenges/09-trainer-team/answer/monster.py
 
       - name: だい2ぶ こたえが ぜんぶ ✅ になるか
         env:
@@ -47,9 +49,25 @@ jobs:
           python challenges/04-first-monster/answer/first_monster.py
           python challenges/05-monster-care/answer/monster_care.py
           python challenges/06-monster-card/answer/monster_card.py
+          python challenges/07-busy-ranch/answer/busy_ranch.py
+          python challenges/08-play-together/answer/play_together.py
+          python challenges/09-trainer-team/answer/trainer_team.py
 
       - name: だい2ぶ スターター（あなあき）が とまらずに うごくか
         run: |
           python challenges/04-first-monster/first_monster.py
           python challenges/05-monster-care/monster_care.py
           python challenges/06-monster-card/monster_card.py
+          python challenges/07-busy-ranch/busy_ranch.py
+          python challenges/08-play-together/play_together.py
+          python challenges/09-trainer-team/trainer_team.py
+
+      - name: だい2ぶ いろなし（NO_COLOR=1）でも こたえが ✅ になるか
+        env:
+          STRICT_CHECK: "1"
+          NO_COLOR: "1"
+        run: |
+          for f in challenges/0[4-9]-*/answer/*.py; do
+            case "$f" in */ranch_tools.py|*/monster.py) continue ;; esac
+            python "$f" > /dev/null
+          done
