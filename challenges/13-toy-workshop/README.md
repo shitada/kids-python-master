@@ -130,7 +130,8 @@ class MyToy:
 
 ### 設計メモ `DESIGN` で、道具を決めよう
 
-ファイルの `DESIGN` に、君の道具の設計が書いてあるよ。**自由に書きかえてOK**。
+ファイルの `DESIGN` に、君の道具の設計が書いてあるよ。
+**名前・絵文字・使える回数は、自由に書きかえてOK**。
 
 ```python
 DESIGN = {
@@ -141,8 +142,8 @@ DESIGN = {
 }
 ```
 
-`effect` を変えたら、`use` の中でモンスターに頼む仕事も、それに合わせて変えよう。
-（`"play"` なら `monster.play()`、`"sleep"` なら `monster.sleep()`）
+`effect`（モンスターに頼む仕事）は、まずは `"eat"` のまま作ろう。
+全部 ✅ になったら、「🎨 自由改造」で `"play"` や `"sleep"` にも挑戦できるよ。
 
 ---
 
@@ -210,7 +211,7 @@ B は1回も使っていないので、残り 2 回のまま。
 
 ## 🚀 やってみよう
 
-`my_tool.py` を開いて、まず `DESIGN` を読もう（変えてもOK）。それから `# TODO` を番号順に直そう。
+`my_tool.py` を開いて、まず `DESIGN` を読もう（名前・絵文字・回数は変えてもOK）。それから `# TODO` を番号順に直そう。
 
 ```bash
 python challenges/13-toy-workshop/my_tool.py
@@ -226,12 +227,12 @@ python challenges/13-toy-workshop/my_tool.py
 ### TODO 2 🔔 使う `use`
 
 残り回数が 0 なら、何もしないで `False`。
-残っていたら、`DESIGN` の `effect` の仕事をモンスターに1回頼んで、残り回数を 1 へらして、`True`。
+残っていたら、モンスターに食べてもらって（`effect` が `"eat"` だからね）、残り回数を 1 へらして、`True`。
 
 - **完成の目印:** 「🔔 A: 使えた！ 残り 2 → 1 回」と出て、3回目は「🛑 もう空っぽ！」
 - **ヒント:**
   1. `if self.left == 0:` → `return False`
-  2. `monster.eat(3)`（`effect` が `"eat"` の場合。量は自由）
+  2. `monster.eat(3)`（食べる量は自由）
   3. `self.left = self.left - 1`
   4. `return True`
 
@@ -392,8 +393,9 @@ class MyToy:
 
 ## 🎨 自由改造
 
-- `DESIGN` を書きかえて、自分だけの道具を作ろう（名前・絵文字・回数・効果）。
-  `effect` を `"sleep"` にして「子守歌オルゴール」もいいね
+- `DESIGN` の `effect` を `"sleep"` にして、「子守歌オルゴール」を作ろう。
+  **設計を変えたら、コードもそろえる** のがルール。`use` の中の `monster.eat(3)` を `monster.sleep()` に変えよう
+  （`"play"` なら `monster.play()`）。TODOチェックが、設計とコードがそろっているか確かめてくれるよ
 - 2つ目の道具クラスを、一から設計してみよう。設計シート（覚えること・できること）を先に書いてね
 - （上級）`use` の中で、残り回数が 1 の時に「⚠️ もうすぐ空っぽ！」と表示しよう
 

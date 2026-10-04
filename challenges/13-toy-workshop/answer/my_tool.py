@@ -28,7 +28,7 @@ class TrainerWithCounters:
 
 # ===== 君が書くところ =====
 
-# 🛠️ 設計メモ（自由に書きかえてOK）
+# 🛠️ 設計メモ（name・icon・max_uses は自由に書きかえてOK。effect は自由改造で変えよう）
 DESIGN = {
     "name": "おやつベル",   # 道具の名前
     "icon": "🔔",           # 道具の絵文字
@@ -51,7 +51,7 @@ class MyToy:
     def use(self, monster):
         """monster に使う。使えたら True、使えなかったら False を返す。"""
         # TODO 2: 残り回数が 0 なら、何もしないで False を返そう。
-        #         残っていたら、DESIGN の effect の仕事を monster に1回頼んで、
+        #         残っていたら、monster に食べてもらって（effect が "eat" だからね。量は自由）、
         #         残り回数を 1 へらして、True を返そう。
         if self.left == 0:
             return False

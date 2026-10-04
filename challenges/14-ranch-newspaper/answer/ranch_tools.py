@@ -290,7 +290,7 @@ def print_newspaper(morning, evening, mvp):
         print(f"   {name} HP {before['hp']:>2} → {after['hp']:>2}   "
               f"ごきげん {before['happy']:>3} → {after['happy']:>3}")
     if mvp is None:
-        print("🏅 今日のMVP: ？？？（TODO 3）")
+        print("🏅 今日のMVP: ？？？" + ("（仲間がいないよ）" if not morning else "（TODO 3）"))
     else:
         print(f"🏅 今日のMVP: {mvp.name}（ごきげん {mvp.happy}）")
 
@@ -378,6 +378,8 @@ def check_todo2(blueprint, trainer_class, run_morning):
     names = [name for name, _ in order]
     if not names:
         return False, "まだ号令をかけていないよ。trainer.care_all(2) と trainer.use_on_team(toy) を呼ぼう"
+    if names[0] != "care_all" and "care_all" in names or names == ["use_on_team"]:
+        return False, "順番は care_all(2) → use_on_team(toy)。先に care_all(2) をしよう"
     if "care_all" not in names:
         return False, "trainer.care_all(2) で、全員にごはんをあげよう"
     if "use_on_team" not in names:
@@ -420,6 +422,8 @@ def check_todo4(blueprint, publish):
     made = png.exists() and png.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
     if saved is not None:
         png.write_bytes(saved)
+    elif png.exists():
+        png.unlink()   # チェック用の新聞は、残さない
     if error is not None:
         return False, f"publish でエラーが出たよ → {type(error).__name__}: {error}"
     if not LAST_CALLS:

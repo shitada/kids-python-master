@@ -314,10 +314,10 @@ def check_todo1(toy_class):
             return False, f"道具が self.{attribute} を持っていないよ"
     if (toy.name, toy.max_uses) != ("テスト", 3):
         return False, "受け取った name と max_uses を、そのまま覚えよう"
-    if toy.left != 3:
-        return False, "はじめの残り回数 self.left は、max_uses と同じにしよう"
-    if "left" in vars(toy_class) or other.left != 1:
+    if "left" in vars(toy_class):
         return False, "残り回数は、道具1つずつが別々に持とう（__init__ の中で self.left）"
+    if toy.left != 3 or other.left != 1:
+        return False, "はじめの残り回数 self.left は、max_uses と同じにしよう"
     return True, "道具が、自分の名前と残り回数を覚えた"
 
 
