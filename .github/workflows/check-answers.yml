@@ -1,7 +1,7 @@
 name: こたえ（answer）が うごくか チェック
 
 # かんせいれい（answer）の コードが エラーなく うごくかを じどうで しらべます。
-# たいわ（input）や ほんものの がめん・おとの さいせいは のぞいています。
+# たいわ（input）や ほんものの おとの さいせいは のぞいています。
 
 on:
   push:
@@ -34,9 +34,22 @@ jobs:
       - name: 03 ドレミ→しゅうはすう
         run: python challenges/03-note-frequency/answer/note_freq.py
 
-      - name: 04 ピクセル・メロディ・クエスト
+      - name: だい2ぶ ranch_tools.py が answer と おなじか
+        run: |
+          for d in challenges/04-first-monster challenges/05-monster-care challenges/06-monster-card; do
+            diff -q "$d/ranch_tools.py" "$d/answer/ranch_tools.py"
+          done
+
+      - name: だい2ぶ こたえが ぜんぶ ✅ になるか
         env:
-          SDL_VIDEODRIVER: dummy
-          SDL_AUDIODRIVER: dummy
-          PYGAME_HIDE_SUPPORT_PROMPT: "1"
-        run: python challenges/04-pixel-melody-quest/answer/pixel_melody_quest.py --check
+          STRICT_CHECK: "1"
+        run: |
+          python challenges/04-first-monster/answer/first_monster.py
+          python challenges/05-monster-care/answer/monster_care.py
+          python challenges/06-monster-card/answer/monster_card.py
+
+      - name: だい2ぶ スターター（あなあき）が とまらずに うごくか
+        run: |
+          python challenges/04-first-monster/first_monster.py
+          python challenges/05-monster-care/monster_care.py
+          python challenges/06-monster-card/monster_card.py
